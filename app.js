@@ -48,28 +48,60 @@ const ADMIN_CODE = "admin123"; // đổi tùy bạn
 // Nếu Firestore trống, auto seed danh sách này
 const DEFAULT_GIFTS = [
   {
-    title: "Tai nghe Bluetooth",
-    price: "≈ 500k–1tr",
-    tag: "công nghệ",
+    title: "Hoa xinh 🌷",
+    price: "≈ 200k–800k",
+    tag: "lãng mạn",
     link: "",
     image: "",
-    note: "Ưu tiên loại có mic, pin trâu."
+    note: "Bạn thích hoa gì (hồng/tulip/baby…)? Màu nào?"
   },
   {
-    title: "Sách (bạn chọn thể loại)",
-    price: "≈ 150k–400k",
+    title: "Sách hay 📚",
+    price: "≈ 150k–450k",
     tag: "sách",
     link: "",
     image: "",
-    note: "Mình thích: kỹ năng, kinh doanh, tâm lý, sci-fi."
+    note: "Cho mình biết thể loại bạn thích hoặc gửi link cuốn bạn muốn."
   },
   {
-    title: "LEGO nhỏ / mô hình",
-    price: "≈ 300k–900k",
+    title: "LEGO / mô hình 🧩",
+    price: "≈ 300k–1tr5",
     tag: "hobby",
     link: "",
     image: "",
-    note: "Miễn là dễ thương 😄"
+    note: "Set nhỏ xinh cũng được — bạn thích theme nào?"
+  },
+  {
+    title: "Gấu bông 🧸",
+    price: "≈ 200k–900k",
+    tag: "dễ thương",
+    link: "",
+    image: "",
+    note: "Size vừa hay to? Màu/pattern nào?"
+  },
+  {
+    title: "Váy xinh 👗",
+    price: "≈ 400k–2tr",
+    tag: "thời trang",
+    link: "",
+    image: "",
+    note: "Bạn gửi size + style bạn thích (basic/tiểu thư/cá tính…)."
+  },
+  {
+    title: "Quần áo ngủ 💤",
+    price: "≈ 250k–1tr2",
+    tag: "thoải mái",
+    link: "",
+    image: "",
+    note: "Chọn chất liệu mềm (cotton/satin). Gửi size giúp mình nhé."
+  },
+  {
+    title: "Một bữa ăn ngon 🍜",
+    price: "≈ tuỳ budget",
+    tag: "hẹn hò",
+    link: "",
+    image: "",
+    note: "Bạn muốn ăn gì? Mình đặt chỗ/đưa đi ăn 😄"
   }
 ];
 
