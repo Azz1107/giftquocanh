@@ -1,23 +1,258 @@
 <!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pick quà</title>
-  <link rel="stylesheet" href="./style.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>Chọn quà bạn muốn</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎁 Wishlist — Chọn quà giúp mình</title>
 
-    <section class="bar">
-      <input id="name" placeholder="Tên bạn (vd: Minh)" />
-      <input id="note" placeholder="Ghi chú (màu/size...)" />
-    </section>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-    <div id="grid" class="grid"></div>
-  </main>
+    <link rel="stylesheet" href="./style.css" />
+    <meta name="color-scheme" content="dark light" />
+  </head>
 
-  <script type="module" src="./app.js"></script>
-</body>
+  <body>
+    <div class="bg"></div>
+    <div class="noise"></div>
+
+    <header class="topbar">
+      <div class="wrap topbar__inner">
+        <div class="brand">
+          <div class="brand__logo">🎁</div>
+          <div class="brand__text">
+            <div class="brand__title">Wishlist</div>
+            <div class="brand__sub">Bạn chọn quà mình tặng nè ✨</div>
+          </div>
+        </div>
+
+        <div class="topbar__actions">
+          <button id="btnWho" class="btn btn--ghost" type="button">
+            <span class="btn__icon">👤</span>
+            <span id="whoLabel">Đang tải...</span>
+          </button>
+
+          <button id="btnHelp" class="btn btn--ghost" type="button" aria-label="Hướng dẫn">
+            <span class="btn__icon">💡</span>
+            <span>Hướng dẫn</span>
+          </button>
+
+          <button id="btnAdmin" class="btn btn--primary" type="button" title="Chế độ chủ (thêm quà)">
+            <span class="btn__icon">➕</span>
+            <span>Thêm quà</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div class="hero__left">
+          <h1 class="hero__title">
+            Chọn một món bạn thích, mình sẽ <span class="glow">tặng</span> 🎉
+          </h1>
+          <p class="hero__desc">
+            Mỗi món chỉ có <b>1 người</b> giữ chỗ.
+            Website hỗ trợ tối đa <b>2 người chọn</b> (tuỳ bạn bật), cập nhật realtime.
+          </p>
+
+          <div class="hero__stats">
+            <div class="stat">
+              <div class="stat__label">Người đang tham gia</div>
+              <div id="statSelectors" class="stat__value">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat__label">Món đã được giữ</div>
+              <div id="statReserved" class="stat__value">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat__label">Tổng số món</div>
+              <div id="statTotal" class="stat__value">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__right">
+          <div class="panel">
+            <div class="panel__row">
+              <div class="chip">
+                <span class="dot dot--ok"></span>
+                <span>Realtime</span>
+              </div>
+              <div class="chip">
+                <span class="dot dot--warn"></span>
+                <span>Mỗi quà 1 người</span>
+              </div>
+              <div class="chip">
+                <span class="dot dot--info"></span>
+                <span>GitHub Pages</span>
+              </div>
+            </div>
+
+            <div class="panel__row panel__row--search">
+              <div class="search">
+                <span class="search__icon">🔎</span>
+                <input id="searchInput" class="search__input" placeholder="Tìm quà... (vd: tai nghe, sách, LEGO)" />
+              </div>
+              <select id="filterSelect" class="select">
+                <option value="all">Tất cả</option>
+                <option value="available">Chưa ai giữ</option>
+                <option value="reserved">Đã được giữ</option>
+              </select>
+            </div>
+
+            <div class="panel__row panel__row--hint">
+              <span class="muted">Tip:</span>
+              Click “Giữ chỗ” để chọn. Nếu đổi ý, bạn có thể “Bỏ giữ” (chỉ người đã giữ mới bỏ được).
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="list">
+        <div id="skeleton" class="grid grid--skeleton" aria-hidden="true"></div>
+        <div id="grid" class="grid" aria-live="polite"></div>
+
+        <div id="emptyState" class="empty hidden">
+          <div class="empty__icon">🪄</div>
+          <div class="empty__title">Chưa có món quà nào</div>
+          <div class="empty__desc">
+            Bấm <b>“Thêm quà”</b> để tạo danh sách. Hoặc chỉnh sẵn mảng <code>DEFAULT_GIFTS</code> trong app.js.
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer__left">
+          <span class="badge">Made with ❤️</span>
+          <span class="muted">— Firebase Firestore + GitHub Pages</span>
+        </div>
+        <div class="footer__right muted">
+          <span id="statusDot" class="statusDot"></span>
+          <span id="statusText">Đang kết nối...</span>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Modal: help -->
+    <dialog id="helpModal" class="modal">
+      <form method="dialog" class="modal__card">
+        <div class="modal__head">
+          <div class="modal__title">💡 Hướng dẫn nhanh</div>
+          <button class="iconBtn" value="cancel" aria-label="Đóng">✕</button>
+        </div>
+
+        <div class="modal__body">
+          <ol class="steps">
+            <li>Mở web, đặt <b>tên</b> của bạn (để hệ thống nhớ ai giữ món nào).</li>
+            <li>Chọn món muốn nhận: bấm <b>Giữ chỗ</b>.</li>
+            <li>Nếu đổi ý: bấm <b>Bỏ giữ</b> (chỉ người đang giữ mới bỏ được).</li>
+            <li>Website cho tối đa <b>1–2 người</b> tham gia (cấu hình trong <code>app.js</code>).</li>
+          </ol>
+
+          <div class="callout">
+            <div class="callout__icon">❗</div>
+            <div class="callout__text">
+              Lưu ý: đây là dự án nhỏ chạy client-side. Nếu muốn “khóa cứng” giới hạn 2 người bằng server,
+              bạn có thể thêm Cloud Functions / security rules nâng cao.
+            </div>
+          </div>
+        </div>
+
+        <div class="modal__foot">
+          <button class="btn btn--ghost" value="cancel" type="submit">Đóng</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Modal: set name -->
+    <dialog id="nameModal" class="modal">
+      <form method="dialog" class="modal__card">
+        <div class="modal__head">
+          <div class="modal__title">👤 Bạn tên gì?</div>
+          <button class="iconBtn" value="cancel" aria-label="Đóng">✕</button>
+        </div>
+
+        <div class="modal__body">
+          <p class="muted">
+            Nhập tên để hệ thống ghi lại bạn đang giữ món nào. (Tên được lưu trong trình duyệt của bạn.)
+          </p>
+
+          <label class="field">
+            <span class="field__label">Tên hiển thị</span>
+            <input id="nameInput" class="input" placeholder="VD: Minh, An, Linh..." maxlength="32" />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Mã tham gia (tuỳ chọn)</span>
+            <input id="joinCodeInput" class="input" placeholder="Nếu chủ web có đặt mã, nhập vào đây" maxlength="32" />
+            <span class="field__hint muted">Bạn có thể tắt/bật mã tham gia trong app.js</span>
+          </label>
+
+          <div id="nameError" class="error hidden"></div>
+        </div>
+
+        <div class="modal__foot">
+          <button class="btn btn--ghost" value="cancel" type="submit">Hủy</button>
+          <button id="saveNameBtn" class="btn btn--primary" value="confirm" type="submit">Lưu</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Modal: add gift -->
+    <dialog id="giftModal" class="modal">
+      <form method="dialog" class="modal__card">
+        <div class="modal__head">
+          <div class="modal__title">➕ Thêm món quà</div>
+          <button class="iconBtn" value="cancel" aria-label="Đóng">✕</button>
+        </div>
+
+        <div class="modal__body">
+          <label class="field">
+            <span class="field__label">Tên món</span>
+            <input id="giftTitle" class="input" placeholder="VD: Tai nghe Bluetooth" maxlength="80" />
+          </label>
+
+          <div class="row2">
+            <label class="field">
+              <span class="field__label">Giá (tuỳ chọn)</span>
+              <input id="giftPrice" class="input" placeholder="VD: 500k" maxlength="20" />
+            </label>
+            <label class="field">
+              <span class="field__label">Tag (tuỳ chọn)</span>
+              <input id="giftTag" class="input" placeholder="VD: công nghệ / sách / skincare" maxlength="24" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field__label">Link mua (tuỳ chọn)</span>
+            <input id="giftLink" class="input" placeholder="https://..." />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Ảnh (URL, tuỳ chọn)</span>
+            <input id="giftImage" class="input" placeholder="https://...jpg/png/webp" />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Ghi chú (tuỳ chọn)</span>
+            <textarea id="giftNote" class="textarea" placeholder="VD: Màu đen / size M / bản có mic..." maxlength="180"></textarea>
+          </label>
+
+          <div id="giftError" class="error hidden"></div>
+        </div>
+
+        <div class="modal__foot">
+          <button class="btn btn--ghost" value="cancel" type="submit">Hủy</button>
+          <button id="addGiftBtn" class="btn btn--primary" value="confirm" type="submit">Thêm</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
+  </body>
 </html>
