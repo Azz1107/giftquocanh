@@ -25,12 +25,13 @@ import {
  */
 const firebaseConfig = {
   // TODO: paste config từ Firebase Console (Project settings)
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBnuNzI0WLu4WiYHzfa5WcJuHe1CtsJBL0",
+  authDomain: "gift-wishlist-b1cdd.firebaseapp.com",
+  projectId: "gift-wishlist-b1cdd",
+  storageBucket: "gift-wishlist-b1cdd.firebasestorage.app",
+  messagingSenderId: "266015663933",
+  appId: "1:266015663933:web:2fb7cf5eb49d9605ac8754",
+  measurementId: "G-KRJQ9WM0SZ"
 };
 
 // Giới hạn số người được tham gia giữ quà
